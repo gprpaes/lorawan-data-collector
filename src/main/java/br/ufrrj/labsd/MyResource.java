@@ -1,4 +1,4 @@
-package org.example;
+package br.ufrrj.labsd;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
