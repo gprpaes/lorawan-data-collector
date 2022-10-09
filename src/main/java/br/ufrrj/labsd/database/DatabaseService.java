@@ -1,4 +1,4 @@
-package br.ufrrj.labsd;
+package br.ufrrj.labsd.database;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.*;
@@ -16,6 +16,7 @@ public class DatabaseService {
         props.setProperty("password", dotenv.get("PSQL_PASSWORD"));
        try {
            connection = DriverManager.getConnection(url, props);
+           System.out.println("Successfully connected to database!");
        } catch (SQLException e) {
            System.out.println("Error on connecting to database: "+e);
        }
