@@ -25,6 +25,7 @@ public class DatabaseUtils {
                     "PORT INT NOT NULL," +
                     "USERNAME TEXT," +
                     "PASSWORD TEXT);");
+            statement.close();
         } catch (SQLException e) {
             System.out.println("Error creating mongo table "+e);
         }
