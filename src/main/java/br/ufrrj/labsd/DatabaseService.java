@@ -10,12 +10,9 @@ public class DatabaseService {
 
     private DatabaseService () {
         Dotenv dotenv = Dotenv.load();
-        String url = "jdb:postgresql:/";
+        String url = "jdbc:postgresql://"+dotenv.get("PSQL_HOST")+":"+dotenv.get("PSQL_PORT")+"/"+dotenv.get("PSQL_DB");
         Properties props = new Properties();
         props.setProperty("user", dotenv.get("PSQL_USER"));
-        props.setProperty("host", dotenv.get("PSQL_HOST"));
-        props.setProperty("port", dotenv.get("PSQL_PORT"));
-        props.setProperty("database", dotenv.get("PSQL_DB"));
         props.setProperty("password", dotenv.get("PSQL_PASSWORD"));
        try {
            connection = DriverManager.getConnection(url, props);
