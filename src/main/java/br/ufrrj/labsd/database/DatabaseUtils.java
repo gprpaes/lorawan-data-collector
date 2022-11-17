@@ -10,6 +10,8 @@ public class DatabaseUtils {
     public static void setupDB(){
         System.out.println("Creating database tables (if necessary)...");
         createMongoTable();
+        createMQTTTable();
+        createCollectorTable();
     }
 
 
@@ -28,6 +30,46 @@ public class DatabaseUtils {
             statement.close();
         } catch (SQLException e) {
             System.out.println("Error creating mongo table "+e);
+        }
+    }
+
+    private static void createCollectorTable(){
+        Connection database = DatabaseService.getInstance().getConnection();
+
+        try {
+            Statement statement = database.createStatement();
+            statement.execute("CREATE TABLE IF NOT EXISTS COLLECTOR(" +
+                    "ID SERIAL PRIMARY KEY, "+
+                    "COLLECTION TEXT,"+
+                    "MONGO_ID INT,"+
+                    "MQTT_ID INT,"+
+                    "CONSTRAINT fk_mongo"+
+                    "   FOREIGN KEY(MONGO_ID)" +
+                    "   REFERENCES MONGO(ID),"+
+                    "CONSTRAINT fk_mqtt"+
+                    "   FOREIGN KEY(MQTT_ID)" +
+                    "   REFERENCES MQTT(ID)"+
+                    ");");
+        } catch (SQLException e){
+            System.out.println("Error creating Collector table "+e);
+        }
+    }
+
+
+    private static void createMQTTTable(){
+        Connection database = DatabaseService.getInstance().getConnection();
+
+        try {
+            Statement statement = database.createStatement();
+            statement.execute("CREATE TABLE IF NOT EXISTS MQTT(" +
+                    "ID SERIAL PRIMARY KEY, "+
+                    "HOST TEXT,"+
+                    "PORT TEXT," +
+                    "USERNAME TEXT," +
+                    "PASSWORD TEXT" +
+                    ");");
+        } catch (SQLException e){
+            System.out.println("Error creating MQTT table "+e);
         }
     }
 }
