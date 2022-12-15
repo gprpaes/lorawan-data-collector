@@ -1,7 +1,7 @@
 package br.ufrrj.labsd.mongo;
 
 public class MongoModel {
-    private int id;
+    private Integer id;
     private String host;
     private String port;
     private String username;
@@ -9,8 +9,9 @@ public class MongoModel {
     private String name;
 
 
-
-    public MongoModel(int id, String host, String port, String username, String password, String name) {
+    //JsonB não está funcionando sem um construtor sem parâmetros
+    public MongoModel() {}
+    public MongoModel(Integer id, String host, String port, String username, String password, String name) {
         this.id = id;
         this.host = host;
         this.port = port;
@@ -19,11 +20,11 @@ public class MongoModel {
         this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -65,4 +66,14 @@ public class MongoModel {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "MongoModel{" +
+                "id=" + id +
+                ", host='" + host + '\'' +
+                ", port='" + port + '\'' +
+                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

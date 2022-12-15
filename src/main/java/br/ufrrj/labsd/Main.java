@@ -1,6 +1,5 @@
 package br.ufrrj.labsd;
 
-import br.ufrrj.labsd.database.DatabaseService;
 import br.ufrrj.labsd.database.DatabaseUtils;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
