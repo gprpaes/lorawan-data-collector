@@ -1,5 +1,8 @@
 package br.ufrrj.labsd.mongo;
 
+import jakarta.json.bind.annotation.JsonbCreator;
+import jakarta.json.bind.annotation.JsonbTransient;
+
 public class MongoModel {
     private Integer id;
     private String host;
@@ -8,9 +11,7 @@ public class MongoModel {
     private String password;
     private String name;
 
-
-    //JsonB não está funcionando sem um construtor sem parâmetros
-    public MongoModel() {}
+   @JsonbCreator
     public MongoModel(Integer id, String host, String port, String username, String password, String name) {
         this.id = id;
         this.host = host;
@@ -55,6 +56,7 @@ public class MongoModel {
     public void setPassword(String password) {
         this.password = password;
     }
+    @JsonbTransient
     public String getPassword() {
         return password;
     }
