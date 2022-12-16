@@ -6,13 +6,13 @@ import jakarta.json.bind.annotation.JsonbTransient;
 public class MongoModel {
     private Integer id;
     private String host;
-    private String port;
+    private Integer port;
     private String username;
     private String password;
     private String name;
 
    @JsonbCreator
-    public MongoModel(Integer id, String host, String port, String username, String password, String name) {
+    public MongoModel(Integer id, String host, Integer port, String username, String password, String name) {
         this.id = id;
         this.host = host;
         this.port = port;
@@ -24,7 +24,7 @@ public class MongoModel {
     public Integer getId() {
         return id;
     }
-
+    @JsonbTransient
     public void setId(Integer id) {
         this.id = id;
     }
@@ -37,11 +37,11 @@ public class MongoModel {
         this.host = host;
     }
 
-    public String getPort() {
+    public Integer getPort() {
         return port;
     }
 
-    public void setPort(String port) {
+    public void setPort(Integer port) {
         this.port = port;
     }
 

@@ -1,5 +1,12 @@
 package br.ufrrj.labsd.mongo;
 
+import br.ufrrj.labsd.database.DatabaseService;
+import br.ufrrj.labsd.database.DatabaseUtils;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class MongoService {
@@ -9,8 +16,13 @@ public class MongoService {
         this.mongoRepository = mongoRepository;
     }
 
-    public boolean createMongoInstance(MongoModel mongoModel){
-        return mongoRepository.saveMongoInstance(mongoModel);
+    public Integer createMongoInstance(MongoModel mongoModel){
+        boolean inserted =  mongoRepository.saveMongoInstance(mongoModel);
+        if(inserted){
+            return mongoRepository.getLastInsertedId();
+        }
+
+        return null;
     }
 
     public boolean updateMongoInstance(MongoModel mongoModel){
@@ -28,4 +40,5 @@ public class MongoService {
     public List<MongoModel> getAllMongoInstances(){
         return mongoRepository.getAllMongoInstances();
     }
+
 }

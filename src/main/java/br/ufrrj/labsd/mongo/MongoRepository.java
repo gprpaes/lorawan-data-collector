@@ -1,29 +1,31 @@
 package br.ufrrj.labsd.mongo;
 
+import br.ufrrj.labsd.database.DatabaseService;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MongoRepository {
-    Connection database;
+    Connection database = DatabaseService.getInstance().getConnection();
 
     // @TODO: Passar a senha por uma função de derivação de chave, bcrypt ou PBKDF2
     public boolean saveMongoInstance(MongoModel mongoModel){
         try {
-            PreparedStatement statement = database.prepareStatement("INSERT INTO MONGO VALUES(?,?,?,?,?);");
+            PreparedStatement statement = database.prepareStatement("INSERT INTO MONGO (NAME, HOST,PORT,USERNAME,PASSWORD) VALUES(?,?,?,?,?);");
             statement.setString(1, mongoModel.getName());
             statement.setString(2, mongoModel.getHost());
-            statement.setString(3, mongoModel.getPort());
+            statement.setInt(3, mongoModel.getPort());
             statement.setString(4, mongoModel.getUsername());
             statement.setString(5, mongoModel.getPassword());
 
-            boolean success = statement.execute();
-
+            int i = statement.executeUpdate();
+            boolean success = i == 1;
             statement.close();
             return success;
         }catch (SQLException e) {
             e.printStackTrace();
-            return false    ;
+            return false;
         }
     }
 
@@ -35,7 +37,7 @@ public class MongoRepository {
 
            statement.setString(1, mongoModel.getName());
            statement.setString(2, mongoModel.getHost());
-           statement.setString(3, mongoModel.getPort());
+           statement.setInt(3, mongoModel.getPort());
            statement.setString(4, mongoModel.getUsername());
            statement.setString(5, mongoModel.getPassword());
            statement.setInt(6, mongoModel.getId());
@@ -60,7 +62,7 @@ public class MongoRepository {
             while (resultSet.next()) {
                 mongoModel = new MongoModel(resultSet.getInt("ID"),
                         resultSet.getString("HOST"),
-                        resultSet.getString("PORT"),
+                        resultSet.getInt("PORT"),
                         resultSet.getString("USERNAME"),
                         resultSet.getString("PASSWORD"),
                         resultSet.getString("NAME"));
@@ -97,7 +99,7 @@ public class MongoRepository {
             while (resultSet.next()) {
                 MongoModel model = new MongoModel(resultSet.getInt("ID"),
                         resultSet.getString("HOST"),
-                        resultSet.getString("PORT"),
+                        resultSet.getInt("PORT"),
                         resultSet.getString("USERNAME"),
                         resultSet.getString("PASSWORD"),
                         resultSet.getString("NAME"));
@@ -105,6 +107,23 @@ public class MongoRepository {
             }
             statement.close();
             return mongoModels;
+        } catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Integer getLastInsertedId(){
+        Connection database = DatabaseService.getInstance().getConnection();
+        try {
+            PreparedStatement statement = database.prepareStatement("select id from mongo order by id desc fetch first 1 row only");
+            ResultSet rs = statement.executeQuery();
+            Integer id = null;
+            if (rs.next()) {
+               id = rs.getInt("ID");
+            }
+
+            return id;
         } catch (SQLException e){
             e.printStackTrace();
             return null;

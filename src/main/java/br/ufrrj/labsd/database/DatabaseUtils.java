@@ -1,8 +1,6 @@
 package br.ufrrj.labsd.database;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DatabaseUtils {
     private DatabaseUtils () {}
@@ -50,6 +48,8 @@ public class DatabaseUtils {
                     "   FOREIGN KEY(MQTT_ID)" +
                     "   REFERENCES MQTT(ID)"+
                     ");");
+
+            statement.close();
         } catch (SQLException e){
             System.out.println("Error creating Collector table "+e);
         }
@@ -68,8 +68,11 @@ public class DatabaseUtils {
                     "USERNAME TEXT," +
                     "PASSWORD TEXT" +
                     ");");
+            statement.close();
         } catch (SQLException e){
             System.out.println("Error creating MQTT table "+e);
         }
     }
+
+
 }
