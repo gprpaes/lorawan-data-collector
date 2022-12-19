@@ -1,15 +1,14 @@
 package br.ufrrj.labsd.mongo;
 
 import br.ufrrj.labsd.database.DatabaseService;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Path("mongo")
@@ -25,11 +24,36 @@ public class MongoResource {
         Response response;
         if(created == null) response = Response.serverError().build();
         else{
-            //TODO: PEGAR URL DO CONTEXTO
+            // @TODO: PEGAR URL DO CONTEXTO
             response = Response.created(new URI("http://localhost:8086/"+created)).build();
         }
         return response;
+    }
 
+    @GET
+    @Path("/{id}")
+    public Response getMongoInstanceById(@PathParam("id") int mongoId){
+        MongoModel mongo = mongoService.getMongoInstance(mongoId);
+        Response response;
+        if(mongo == null) response = Response.status(Response.Status.NOT_FOUND).build();
+        else response = Response.ok().entity(mongo).build();
+
+        return response;
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteMongoInstanceById(@PathParam("id") int mongoId){
+        Integer rowCount = mongoRepository.deleteMongoInstance(mongoId);
+        Response response;
+        if(rowCount == null) response = Response.serverError().build();
+        else{
+            Map<String, Integer> rowCountMap = new HashMap<>();
+            rowCountMap.put("rowCount", rowCount);
+            response = Response.ok().entity(rowCountMap).build();
+        }
+
+        return response;
     }
 
 

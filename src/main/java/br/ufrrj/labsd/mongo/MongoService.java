@@ -29,7 +29,7 @@ public class MongoService {
         return  mongoRepository.updateMongoInstance(mongoModel);
     }
 
-    public boolean deleteMongoInstance(int mongoId){
+    public Integer deleteMongoInstance(int mongoId){
         return mongoRepository.deleteMongoInstance(mongoId);
     }
 

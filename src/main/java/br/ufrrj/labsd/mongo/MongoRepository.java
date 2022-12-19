@@ -76,16 +76,16 @@ public class MongoRepository {
         }
     }
 
-    public boolean deleteMongoInstance(int mongoId) {
+    public Integer deleteMongoInstance(int mongoId) {
        try {
            PreparedStatement statetement = database.prepareStatement("DELETE FROM MONGO WHERE ID = ?;");
            statetement.setInt(1, mongoId);
-           boolean queryResult = statetement.execute();
+           Integer queryResult = statetement.executeUpdate();
            statetement.close();
            return queryResult;
        } catch (SQLException e){
            e.printStackTrace();
-           return false;
+           return null;
        }
     }
 
@@ -129,4 +129,5 @@ public class MongoRepository {
             return null;
         }
     }
+
 }
