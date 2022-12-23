@@ -8,6 +8,7 @@ import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -53,6 +54,17 @@ public class MongoResource {
             response = Response.ok().entity(rowCountMap).build();
         }
 
+        return response;
+    }
+
+    @GET
+    public Response getAllMongoInstances(){
+        Response response;
+        List<MongoModel> mongoModels = mongoRepository.getAllMongoInstances();
+        if(mongoModels == null) response = Response.serverError().build();
+        else {
+            response = Response.ok().entity(mongoModels).build();
+        }
         return response;
     }
 
