@@ -68,5 +68,20 @@ public class MongoResource {
         return response;
     }
 
+    @PUT
+    @Path("/{id}")
+    public Response updateMongoInstance(@PathParam("id") Integer id, MongoModel mongoModel){
+        Response response;
+
+        boolean result = mongoService.updateMongoInstance(id, mongoModel);
+
+        if(!result)  response = Response.serverError().build();
+
+        else response = Response.ok().build();
+
+        return response;
+
+    }
+
 
 }

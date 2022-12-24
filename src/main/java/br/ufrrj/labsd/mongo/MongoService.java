@@ -25,8 +25,8 @@ public class MongoService {
         return null;
     }
 
-    public boolean updateMongoInstance(MongoModel mongoModel){
-        return  mongoRepository.updateMongoInstance(mongoModel);
+    public boolean updateMongoInstance(Integer id, MongoModel mongoModel){
+        return  mongoRepository.updateMongoInstance(id, mongoModel);
     }
 
     public Integer deleteMongoInstance(int mongoId){

@@ -30,7 +30,7 @@ public class MongoRepository {
     }
 
 
-    public boolean updateMongoInstance(MongoModel mongoModel){
+    public boolean updateMongoInstance(Integer id, MongoModel mongoModel){
        try {
            PreparedStatement statement = database.prepareStatement("UPDATE MONGO SET NAME = ?, " +
                    "HOST= ?, PORT = ?, USERNAME = ?, PASSWORD = ? WHERE ID = ?;");
@@ -40,7 +40,7 @@ public class MongoRepository {
            statement.setInt(3, mongoModel.getPort());
            statement.setString(4, mongoModel.getUsername());
            statement.setString(5, mongoModel.getPassword());
-           statement.setInt(6, mongoModel.getId());
+           statement.setInt(6, id);
 
            int success = statement.executeUpdate();
 
