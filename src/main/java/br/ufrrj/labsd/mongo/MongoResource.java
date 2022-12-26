@@ -45,7 +45,7 @@ public class MongoResource {
     @DELETE
     @Path("/{id}")
     public Response deleteMongoInstanceById(@PathParam("id") int mongoId){
-        Integer rowCount = mongoRepository.deleteMongoInstance(mongoId);
+        Integer rowCount = mongoService.deleteMongoInstance(mongoId);
         Response response;
         if(rowCount == null) response = Response.serverError().build();
         else{
@@ -60,7 +60,7 @@ public class MongoResource {
     @GET
     public Response getAllMongoInstances(){
         Response response;
-        List<MongoModel> mongoModels = mongoRepository.getAllMongoInstances();
+        List<MongoModel> mongoModels = mongoService.getAllMongoInstances();
         if(mongoModels == null) response = Response.serverError().build();
         else {
             response = Response.ok().entity(mongoModels).build();
