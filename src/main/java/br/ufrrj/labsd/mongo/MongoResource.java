@@ -26,7 +26,7 @@ public class MongoResource {
         if(created == null) response = Response.serverError().build();
         else{
             // @TODO: PEGAR URL DO CONTEXTO
-            response = Response.created(new URI("http://localhost:8086/"+created)).build();
+            response = Response.created(new URI("http://localhost:8086/mongo/"+created)).build();
         }
         return response;
     }
